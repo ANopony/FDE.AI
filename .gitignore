@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+.turbo/
+.next/
+
+# Test / coverage
+coverage/
+.vite/
+test-results/
+playwright-report/
+
+# Env & logs
+.env
+.env.*
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+
+docs\tech

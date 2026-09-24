@@ -1002,6 +1002,9 @@ Coding Agent 完成任务后必须输出：
 - Deleted: XXX
 - Total Changed: XXX
 
+### Git Commit Message
+...
+
 ### Dependencies Added
 - None
 

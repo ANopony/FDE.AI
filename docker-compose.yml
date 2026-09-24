@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: fde
+      POSTGRES_PASSWORD: fde
+      POSTGRES_DB: fde
+    ports:
+      # Host port is configurable: some Windows setups reserve 5432
+      # (netsh interface ipv4 show excludedportrange protocol=tcp).
+      - '${FDE_DB_PORT:-5432}:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U fde -d fde']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  db-data:

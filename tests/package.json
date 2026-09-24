@@ -1,0 +1,22 @@
+{
+  "name": "@fde-ai/tests",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@fde-ai/database": "workspace:*",
+    "@fde-ai/domain": "workspace:*",
+    "@fde-ai/event-bus": "workspace:*",
+    "@fde-ai/plugin-test-observer": "workspace:*",
+    "@fde-ai/runtime": "workspace:*",
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}
