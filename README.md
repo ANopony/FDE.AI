@@ -78,6 +78,48 @@ Implemented: Plugin Runtime (manifest, registry, lifecycle), Event Bus, Observat
 (PostgreSQL + Drizzle), Memory Core with revisions and readable diffs, Timeline query API,
 Plugin Management API, Memory Viewer UI, Timeline UI, Console shell.
 
+### Quick start
+
+```bash
+pnpm install
+pnpm build
+```
+
+**A. Console + runtime without a database** (in-memory stores, two terminals):
+
+```bash
+pnpm start:runtime:memory     # runtime on :3000, test observer preloaded and enabled
+pnpm start:console            # Console on :3001
+```
+
+Open http://127.0.0.1:3001, then feed the chain one observation:
+
+```bash
+curl -X POST http://127.0.0.1:3000/api/demo/observations \
+  -H 'content-type: application/json' \
+  -d '{"payload":{"customer":"Acme","stage":"lead"}}'
+```
+
+The Timeline page now shows the observation, the mock agent's processing and the resulting
+memory change; the Memory page shows the memory with its revisions and diffs.
+
+**B. Same, with PostgreSQL persistence**:
+
+```bash
+docker compose up -d db                                        # host port 5432
+FDE_DATABASE_URL=postgres://fde:fde@localhost:5432/fde pnpm start:runtime
+pnpm start:console
+```
+
+**C. No servers at all** — the whole chain in one process:
+
+```bash
+pnpm demo
+```
+
+> Windows/PowerShell: replace the `VAR=value command` prefix with `$env:VAR='value'` on its own
+> line, e.g. `$env:FDE_DATABASE_URL='postgres://fde:fde@localhost:5432/fde'` then `pnpm start:runtime`.
+
 ### Project layout
 
 ```text

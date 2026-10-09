@@ -79,6 +79,48 @@ Plugin -> Observation -> Agent Event（Mock）-> Memory -> Memory Revision/Diff 
 （PostgreSQL + Drizzle）、Memory Core（Revision 与可读 Diff）、Timeline 查询 API、
 Plugin Management API、Memory Viewer UI、Timeline UI、Console 壳。
 
+### 快速启动
+
+```bash
+pnpm install
+pnpm build
+```
+
+**方式 A：无数据库启动完整栈**（内存存储，两个终端）
+
+```bash
+pnpm start:runtime:memory     # 运行时 :3000，已预载并启用 test-observer 插件
+pnpm start:console            # Console :3001
+```
+
+打开 http://127.0.0.1:3001，然后用一条命令喂入 Observation：
+
+```bash
+curl -X POST http://127.0.0.1:3000/api/demo/observations \
+  -H 'content-type: application/json' \
+  -d '{"payload":{"customer":"Acme","stage":"lead"}}'
+```
+
+Timeline 页会立刻出现该 Observation、Mock Agent 的处理与随之产生的 Memory Change；
+Memory 页可看到当前记忆、修订历史与 Diff。
+
+**方式 B：同样流程，但使用 PostgreSQL 持久化**
+
+```bash
+docker compose up -d db                                        # 宿主端口 5432
+FDE_DATABASE_URL=postgres://fde:fde@localhost:5432/fde pnpm start:runtime
+pnpm start:console
+```
+
+**方式 C：完全不起服务**，单进程跑通整条闭环
+
+```bash
+pnpm demo
+```
+
+> Windows / PowerShell：把 `变量=值 命令` 的前缀写成单独一行 `$env:变量='值'`，例如
+> `$env:FDE_DATABASE_URL='postgres://fde:fde@localhost:5432/fde'` 之后再执行 `pnpm start:runtime`。
+
 ### 目录结构
 
 ```text
